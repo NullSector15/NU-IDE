@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1278</width>
+    <height>980</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>NU-IDE</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* ---------- General Widget Styling ---------- */
+QWidget {
+    background-color: #1e1e2f;
+    color: #dcdcdc;
+    font-family: Consolas, monospace;
+    font-size: 12pt;
+}
+
+/* ---------- Group Boxes ---------- */
+QGroupBox {
+    border: 1px solid #3c3f58;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+QGroupBox:title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 0 8px;
+    color: #f0742f;
+    font-weight: bold;
+    font-size: 11pt;
+}
+
+/* ---------- Labels ---------- */
+QLabel {
+    color: #b9b9bb;
+    background: transparent;
+}
+QComboBox::down-arrow {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid white;
+}
+/* ---------- Line Edits (Input Fields) ---------- */
+QLineEdit {
+    background-color: #2c2f45;
+    color: #ffffff;
+    border: 2px solid #f0742f;
+    border-radius: 4px;
+    padding: 6px;
+}
+
+/* ---------- Combo Boxes ---------- */
+QComboBox {
+    background-color: #2c2f45;
+    color: #ffffff;
+    border: 2px solid #f0742f;
+    border-radius: 4px;
+    padding: 4px;
+    min-width: 6em;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-left: 1px solid #f0742f;
+}
+
+
+/* ---------- Buttons ---------- */
+QPushButton {
+    background-color: #f0742f;
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+}
+
+QPushButton:hover {
+    background-color: #fc7c11;
+}
+
+QPushButton:pressed {
+    background-color: #ff6b35;
+}
+
+/* ---------- Checkboxes ---------- */
+QCheckBox {
+    color: #b9b9bb;
+    font-weight: normal;
+}
+
+QCheckBox::indicator {
+    width: 14px;
+    height: 14px;
+    border: 1px solid #f0742f;
+    background-color: #1e1e2f;
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/icons/check.png); /* Replace with a checkmark icon if desired */
+    background-color: #3c3f58;
+}
+
+/* ---------- Tool Buttons ---------- */
+QToolButton {
+    background-color: #2c2f45;
+    color: #dcdcdc;
+    border: 1px solid #3c3f58;
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+
+QToolButton:hover {
+    background-color: #3c3f58;
+}
+
+/* ---------- Scroll Bars ---------- */
+QScrollBar:vertical {
+    border: none;
+    background: #2c2f45;
+    width: 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: #f0742f;
+    border-radius: 5px;
+    min-height: 20px;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+/* ---------- Text Edits (for output/monitor window) ---------- */
+QTextEdit, QPlainTextEdit {
+    background-color: #1e1e2f;
+    color: #00ff9c; /* terminal-like output */
+    border: 1px solid #3c3f58;
+    border-radius: 4px;
+    padding: 6px;
+    font-family: Consolas, monospace;
+    font-size: 11pt;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0" colspan="5">
+     <widget class="QGroupBox" name="Code">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Code</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QPlainTextEdit" name="CodeT"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Port: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="5">
+     <widget class="QGroupBox" name="Serial">
+      <property name="title">
+       <string>Serial monitor</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QLabel" name="BaudRate_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Baud Rate: </string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="4">
+        <widget class="QPlainTextEdit" name="SerialText">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="Connect">
+         <property name="text">
+          <string>Connect</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="Disconnect">
+         <property name="text">
+          <string>Disconnect</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="BaudRate"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="Port"/>
+    </item>
+    <item row="0" column="4">
+     <widget class="QCheckBox" name="oldBootloaderCheckBox">
+      <property name="text">
+       <string>Old Bootloader</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QComboBox" name="Board"/>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="label_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Board:</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1278</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOpen_Project">
+    <property name="title">
+     <string>Project</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionCreate"/>
+    <addaction name="actionClose_save"/>
+   </widget>
+   <widget class="QMenu" name="menuActions">
+    <property name="title">
+     <string>Actions</string>
+    </property>
+    <addaction name="actionUpload"/>
+   </widget>
+   <widget class="QMenu" name="menuLibrary_Manager">
+    <property name="title">
+     <string>Library manager</string>
+    </property>
+    <widget class="QMenu" name="menuLibraries">
+     <property name="title">
+      <string>Libraries</string>
+     </property>
+     <addaction name="actionAdd"/>
+     <addaction name="actionRemove"/>
+     <addaction name="actionAdd_lib_from_zip_file"/>
+    </widget>
+    <addaction name="menuLibraries"/>
+   </widget>
+   <addaction name="menuOpen_Project"/>
+   <addaction name="menuActions"/>
+   <addaction name="menuLibrary_Manager"/>
+  </widget>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionClose_save">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionUpload">
+   <property name="text">
+    <string>Upload</string>
+   </property>
+  </action>
+  <action name="actionAdd">
+   <property name="text">
+    <string>Add</string>
+   </property>
+  </action>
+  <action name="actionRemove">
+   <property name="text">
+    <string>Remove</string>
+   </property>
+  </action>
+  <action name="actionAdd_lib_from_zip_file">
+   <property name="text">
+    <string>Add Lib From Zip File</string>
+   </property>
+  </action>
+  <action name="actionCreate">
+   <property name="text">
+    <string>Create</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
