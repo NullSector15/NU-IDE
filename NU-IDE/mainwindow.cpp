@@ -16,6 +16,7 @@
 #include <QStandardPaths>
 #include <QSerialPort>
 #include <QByteArray>
+#include <QTimer>
 
 #include "highlighting.h"
 
@@ -26,16 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // --- Populate Serial Ports ---
-    const auto ports = QSerialPortInfo::availablePorts();
-    for (const QSerialPortInfo &port : ports) {
-        ui->Port->addItem(port.systemLocation());
-    }
-    CppHighlighter *highlighter = new CppHighlighter(ui->CodeT->document());
-    if (ui->Port->count() == 0) {
-        ui->Port->addItem("No ports available");
-    }
-
     // --- Boards ---
     ui->Board->addItem("Arduino Uno", "arduino:avr:uno");
     ui->Board->addItem("Arduino Nano", "arduino:avr:nano");
@@ -45,15 +36,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->Board->addItem("Arduino Pro Mini 5V/16MHz", "arduino:avr:pro:cpu=16MHzatmega328");
     ui->Board->addItem("Arduino Pro Mini 3.3V/8MHz", "arduino:avr:pro:cpu=8MHzatmega328");
 
+    connect(serial, &QSerialPort::readyRead, this, &MainWindow::readSerialData);
+    QTimer *timer = new QTimer(this);
+
+    connect(timer, &QTimer::timeout, this, &MainWindow::updatePorts);
+
+    QTimer::singleShot(0, this, [=]() {
+        timer->start(200);
+    });
+
     // --- Check if arduino-cli exists ---
 
     if (QStandardPaths::findExecutable("arduino-cli.exe").isEmpty()) {
         QMessageBox::critical(this, "Error", "arduino-cli not found in PATH.");
         return;
     }
-
-    connect(serial, &QSerialPort::readyRead, this, &MainWindow::readSerialData);
-
 }
 
 MainWindow::~MainWindow()
@@ -439,5 +436,18 @@ void MainWindow::handleSerialError(QSerialPort::SerialPortError error)
     if (error != QSerialPort::NoError) {
         QMessageBox::warning(this, "Serial Error", serial->errorString());
         qDebug() << "Serial error:" << serial->errorString();
+    }
+}
+// ===================== SERIAL PORTS =====================
+void MainWindow::updatePorts() {
+    ui->Port->clear();
+
+    const auto ports = QSerialPortInfo::availablePorts();
+    for (const QSerialPortInfo &port : ports) {
+        ui->Port->addItem(port.systemLocation());
+    }
+
+    if (ui->Port->count() == 0) {
+        ui->Port->addItem("No ports available");
     }
 }
