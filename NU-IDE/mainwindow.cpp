@@ -448,6 +448,6 @@ void MainWindow::updatePorts() {
     }
 
     if (ui->Port->count() == 0) {
-        ui->Port->addItem("No ports available");
+        ui->Port->addItem("No ports available.");
     }
 }
