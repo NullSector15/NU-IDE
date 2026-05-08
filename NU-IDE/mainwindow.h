@@ -43,6 +43,8 @@ private slots:
 
     void handleSerialError(QSerialPort::SerialPortError error);
 
+    void updatePorts(); 
+
 private:
     Ui::MainWindow *ui;
     QString currentFilePath;
